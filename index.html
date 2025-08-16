@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluido - Affordable AI Image Generation API</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.5;
+            color: var(--gray-900);
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Header */
+        header {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--gray-800);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary), #10b981);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--gray-800);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Image Gallery */
+        .gallery {
+            padding: 3rem 0;
+        }
+        
+        .gallery h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .image-card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s;
+        }
+        
+        .image-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .image-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /* Pricing */
+        .pricing {
+            padding: 4rem 0;
+            background-color: var(--gray-100);
+        }
+        
+        .pricing h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .pricing-cards {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .pricing-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            width: 300px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .pricing-card.featured {
+            border: 2px solid var(--primary);
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .price .free {
+            color: var(--primary);
+        }
+        
+        .price .month {
+            font-size: 1rem;
+            color: var(--gray-800);
+        }
+        
+        .features {
+            margin-bottom: 2rem;
+        }
+        
+        .features li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .features li:before {
+            content: "✓";
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+        
+        /* Email CTA */
+        .email-cta {
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .email-cta h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .email-cta p {
+            color: var(--gray-800);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 2rem 0;
+            background-color: var(--gray-900);
+            color: white;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .copyright {
+            font-size: 0.875rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+            
+            .pricing-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">fluido</a>
+            <nav class="nav-links">
+                <a href="#gallery">Gallery</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>High Quality AI Image Generation</h1>
+            <p>Fluido provides a cheap, reliable API for generating stunning images. Upscaled and enhanced results with simple API calls.</p>
+            <a href="#pricing" class="cta-button">Get Started</a>
+        </div>
+    </section>
+    
+    <!-- Image Gallery -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <h2>Generated Image Samples</h2>
+            <div class="image-grid">
+                <div class="image-card">
+                    <img src="images/image1.jpg" alt="">
+                </div>
+                <div class="image-card">
+                    <img src="images/image2.jpg" alt="">
+                </div>
+                <div class="image-card">
+                    <img src="images/image3.jpg" alt="">
+                </div>
+                <div class="image-card">
+                    <img src="images/image4.jpg" alt="Abstract Art">
+                </div>
+                <div class="image-card">
+                    <img src="images/image5.jpg" alt="Cyberpunk City">
+                </div>
+                <div class="image-card">
+                    <img src="images/image6.jpg" alt="Anime Character">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2>Simple, Transparent Pricing</h2>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>Free Tier</h3>
+                    <div class="price"><span class="free">$0</span></div>
+                    <ul class="features">
+                        <li>3 non-guaranteed generations per day</li>
+                        <li>Same quality as Developer tier</li>
+                        <li>No API key required</li>
+                        <li>Community support</li>
+                    </ul>
+                    <a href="#" class="cta-button">Start Free</a>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Developer</h3>
+                    <div class="price">$9<span class="month">/month</span></div>
+                    <ul class="features">
+                        <li>200 generations per month</li>
+                        <li>Full quality images</li>
+                        <li>API key access</li>
+                        <li>Priority support</li>
+                        <li>Upscaled & enhanced results</li>
+                    </ul>
+                    <a href="#contact" class="cta-button">Request API Key</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Email CTA -->
+    <section class="email-cta" id="contact">
+        <div class="container">
+            <h2>Ready to Get Started?</h2>
+            <p>Contact us for enterprise plans or if you have any questions about our API.</p>
+            <a href="mailto:hello@fluido.ai" class="cta-button">Email Us</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="copyright">
+                &copy; 2023 Fluido. All rights reserved.
+            </div>
+            <div class="social-links">
+                <a href="https://instagram.com/fluidoai" target="_blank">Instagram</a>
+                <a href="https://youtube.com/fluidoai" target="_blank">YouTube</a>
+                <a href="https://twitter.com/fluidoai" target="_blank">Twitter</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
